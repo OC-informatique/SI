@@ -1,0 +1,731 @@
+# 📚 Tutoriel complet : Personnaliser votre galerie interactive avec IA
+
+Bienvenue dans ce guide qui vous explique **pas à pas** comment personnaliser votre galerie interactive. Vous allez apprendre à créer vos propres scènes, définir le comportement de l'IA et gérer les transitions entre les œuvres.
+
+---
+
+## 🎯 Vue d'ensemble du projet
+
+Votre projet se compose de plusieurs fichiers JavaScript. Vous allez principalement modifier **trois fichiers** :
+
+| Fichier | Rôle | Ce que vous devez faire |
+|---------|------|------------------------|
+| `data.js` | Contient les données de vos scènes | Définir vos œuvres, images, et le comportement de l'IA pour chaque scène |
+| `manip.js` | Gère les commandes prédéterminées | Ajouter des commandes spéciales (aide, reset, etc.) |
+| `prompt.js` | Construit le prompt système | Personnaliser la manière dont le contexte est envoyé à l'IA |
+
+> ⚠️ **Important** : Vous ne devez **PAS** modifier `app.js` qui gère la communication avec l'API et l'interface.
+
+---
+
+## 📄 Fichier 1 : `data.js` — Définir vos scènes
+
+### 🔍 Structure d'une scène
+
+Chaque scène dans le tableau `scenes` représente une œuvre d'art. Voici tous les champs que vous pouvez utiliser :
+
+```javascript
+{
+  id: "scene-art-02",                    // Identifiant unique de la scène
+  title: "Impression, soleil levant",    // Titre affiché dans l'interface
+  imageUrl: "assets/img/02-monnet.jpeg", // Chemin vers l'image
+  chatHistory: [],                       // Historique de conversation (ne pas modifier)
+  temperature: 0.3,                      // Créativité de l'IA (0.0 = précis, 1.0 = créatif)
+  firstUserMessage: "Bonjour, peux-tu m'aider ?", // Premier message automatique
+  systemPrompt: `...`                    // Instructions pour l'IA (voir ci-dessous)
+}
+```
+
+### 📝 Champs à personnaliser
+
+#### 1️⃣ **`id`** — L'identifiant unique
+```javascript
+id: "scene-art-02"
+```
+- Doit être **unique** pour chaque scène
+- Utilisé pour les transitions (`GOTO:scene-art-03`)
+- Convention : `scene-art-XX` ou `scene-XXX`
+
+#### 2️⃣ **`title`** — Le titre de l'œuvre
+```javascript
+title: "Impression, soleil levant"
+```
+- Affiché dans l'interface utilisateur
+- Doit être court et descriptif
+
+#### 3️⃣ **`imageUrl`** — Le chemin de l'image
+```javascript
+imageUrl: "assets/img/02-monnet.jpeg"
+```
+- Chemin relatif vers votre image
+- Formats supportés : `.jpg`, `.jpeg`, `.png`, `.webp`
+
+#### 4️⃣ **`temperature`** — La créativité de l'IA
+```javascript
+temperature: 0.3
+```
+- Valeur entre `0.0` et `1.0`
+- `0.0` → Réponses très précises et cohérentes
+- `0.5` → Équilibre entre précision et créativité
+- `1.0` → Réponses très créatives et variées
+- **Conseil** : Gardez `0.3` pour un guide pédagogique stable
+
+#### 5️⃣ **`firstUserMessage`** — Le message d'accueil
+```javascript
+firstUserMessage: "Bonjour, peux-tu m'aider ?"
+```
+- Premier message envoyé automatiquement par "l'utilisateur" à l'IA
+- Lance la conversation quand on arrive sur la scène
+- Peut être personnalisé selon le contexte
+
+#### 6️⃣ **`systemPrompt`** — Le cerveau de l'IA 🧠
+
+C'est **le plus important** ! Le `systemPrompt` définit le rôle, le comportement et les objectifs de l'IA pour cette scène.
+
+### 🎭 Structure d'un bon systemPrompt
+
+```javascript
+systemPrompt: `
+  Tu es un guide [PERSONNALITÉ], spécialiste de [DOMAINE].
+  
+  Tu accompagnes l'utilisateur dans l'observation de [ŒUVRE].
+  
+  Règles de comportement :
+  - [Règle 1]
+  - [Règle 2]
+  - [Règle 3]
+  
+  Objectif pédagogique :
+  [Ce que l'utilisateur doit comprendre]
+  
+  Gestion de la progression :
+  - Après **le deuxième message de l'utilisateur**, tu dois conclure
+  - Si l'utilisateur comprend plus vite, tu conclus immédiatement
+  - La conclusion doit être claire, brève (4-6 phrases)
+  
+  Déclenchement de la scène suivante :
+  - Lorsque l'utilisateur tape le mot-clé exact « [MOT-CLÉ] »
+    **ou** lorsque tu conclus pédagogiquement,
+    tu termines ton message en incluant exactement :
+    <!-- GOTO:[ID-SCENE-SUIVANTE] -->
+  - Tu indiques explicitement que l'œuvre suivante a été débloquée.
+`
+```
+
+### ✅ Exemple complet d'une scène
+
+```javascript
+{
+  id: "scene-van-gogh",
+  title: "La Nuit étoilée",
+  imageUrl: "assets/img/van-gogh-nuit-etoilee.jpg",
+  chatHistory: [],
+  temperature: 0.3,
+  firstUserMessage: "Bonjour, que vois-tu dans ce tableau ?",
+  systemPrompt: `
+    Tu es un guide passionné et enthousiaste, spécialiste de l'art post-impressionniste.
+    
+    Tu accompagnes l'utilisateur dans l'observation de 
+    « La Nuit étoilée » de Vincent van Gogh (1889).
+    
+    Règles de comportement :
+    - Tu encourages l'observation des mouvements et des tourbillons
+    - Tu poses des questions sur les émotions ressenties
+    - Tu évites le jargon technique au début
+    - Tu guides vers l'expression des sentiments plutôt que l'analyse froide
+    
+    Objectif pédagogique :
+    Faire comprendre que van Gogh exprime ses émotions intérieures 
+    à travers le mouvement et la couleur, pas une simple représentation du ciel.
+    
+    Gestion de la progression :
+    - Après **le deuxième message de l'utilisateur**, tu dois conclure
+    - Si l'utilisateur comprend plus vite, tu conclus immédiatement
+    - La conclusion doit être claire, brève (4-6 phrases)
+    
+    Déclenchement de la scène suivante :
+    - Lorsque l'utilisateur tape le mot-clé exact « émotion »
+      **ou** lorsque tu conclus pédagogiquement,
+      tu termines ton message en incluant exactement :
+      <!-- GOTO:scene-monet -->
+    - Tu indiques explicitement que l'œuvre suivante a été débloquée.
+  `
+}
+```
+
+### 🔗 Système de transitions entre scènes
+
+Les transitions se font via un **marqueur spécial** que l'IA inclut dans sa réponse :
+
+```html
+<!-- GOTO:scene-art-03 -->
+```
+
+**Comment ça marche ?**
+
+1. Dans votre `systemPrompt`, vous demandez à l'IA d'inclure ce marqueur
+2. Vous définissez **quand** l'IA doit l'inclure :
+   - Quand l'utilisateur tape un **mot-clé** spécifique
+   - Quand l'IA a **terminé son objectif pédagogique**
+3. Quand l'IA inclut ce marqueur, `app.js` détecte automatiquement et charge la scène suivante
+
+**Exemple pratique :**
+
+```javascript
+Déclenchement de la scène suivante :
+- Lorsque l'utilisateur tape le mot-clé exact « structure »
+  **ou** lorsque tu conclus pédagogiquement,
+  tu termines ton message en incluant exactement :
+  <!-- GOTO:scene-art-03 -->
+- Tu indiques explicitement que l'œuvre suivante a été débloquée.
+```
+
+### 🎨 Ajouter une nouvelle scène
+
+**Étape 1** : Copiez une scène existante
+
+```javascript
+const scenes = [
+  { /* scène existante 1 */ },
+  { /* scène existante 2 */ },
+  // Ajoutez votre nouvelle scène ici :
+  {
+    id: "scene-ma-nouvelle-oeuvre",
+    title: "Ma nouvelle œuvre",
+    imageUrl: "assets/img/ma-nouvelle-image.jpg",
+    chatHistory: [],
+    temperature: 0.3,
+    firstUserMessage: "Bonjour !",
+    systemPrompt: `...`
+  }
+];
+```
+
+**Étape 2** : Modifiez les valeurs selon votre œuvre
+
+**Étape 3** : Mettez à jour le marqueur `GOTO` de la scène précédente pour pointer vers votre nouvelle scène
+
+### 💡 Utiliser {{SCENES_LIST}} (optionnel)
+
+Si vous voulez que l'IA connaisse **toutes les scènes disponibles**, vous pouvez écrire dans votre `systemPrompt` :
+
+```javascript
+systemPrompt: `
+  Voici les scènes disponibles dans cette galerie :
+  {{SCENES_LIST}}
+  
+  Tu peux mentionner ces œuvres dans tes explications...
+`
+```
+
+La fonction `buildSystemPromptForScene()` remplacera automatiquement `{{SCENES_LIST}}` par :
+```
+- scene-art-02 — Impression, soleil levant
+- scene-art-03 — Mont Sainte-Victoire
+- scene-art-04 — Portrait d'Ambroise Vollard
+```
+
+---
+
+## ⚙️ Fichier 2 : `manip.js` — Gérer les commandes prédéterminées
+
+### 🎯 Rôle du fichier
+
+`manip.js` contient la fonction `beforeAI()` qui **intercepte** les messages de l'utilisateur **avant** qu'ils soient envoyés à l'IA.
+
+**Pourquoi ?**
+- Pour gérer des **commandes spéciales** (aide, reset, nom, etc.)
+- Pour éviter de solliciter l'IA pour des tâches simples
+- Pour avoir un contrôle total sur certaines interactions
+
+### 🔧 Structure de la fonction `beforeAI()`
+
+```javascript
+function beforeAI(userText, scene){
+    let laisseAIdecider = true;
+    
+    // Vos conditions ici
+    
+    return laisseAIdecider;
+}
+```
+
+**Paramètres :**
+- `userText` : Le texte tapé par l'utilisateur
+- `scene` : L'objet scène actuel (contient `id`, `title`, etc.)
+
+**Retour :**
+- `true` → L'IA sera appelée pour répondre
+- `false` → La commande a été gérée, pas besoin de l'IA
+
+### 📋 Commandes déjà implémentées
+
+#### 1️⃣ Commande "aide"
+
+```javascript
+if(userText.toLowerCase() === "aide"){
+    msg = `Voici un peu d'aide.\n
+Écris "aide" pour afficher ce menu d'aide.\n
+Écris "rep [mot-clé]" pour débloquer une nouvelle scène.\n
+Écris "nom" pour que je te rappelle ton nom.\n
+Écris "reset" pour revenir à la première scène.`
+    addMessageToUI("assistant", msg);
+    laisseAIdecider = false;  // ← Pas besoin de l'IA
+}
+```
+
+#### 2️⃣ Commande "nom"
+
+```javascript
+else if(userText.toLowerCase() === "nom"){
+    msg = "Tu t'appelles " + userName + ".";
+    msg += `\n\nSi tu veux changer de nom
+écris "mon nom est X", en écrivant ton nom à la place de X.`;
+    addMessageToUI("assistant", msg);
+    laisseAIdecider = false;
+}
+```
+
+#### 3️⃣ Commande "mon nom est X"
+
+```javascript
+else if(userText.toLowerCase().startsWith("mon nom est ")){
+    const newName = userText.substring("mon nom est ".length).trim();
+    userName = newName;
+    msg = "Tu t'appelles dorénavant " + userName;
+    addMessageToUI("assistant", msg);
+    laisseAIdecider = false;
+}
+```
+
+#### 4️⃣ Commande "reset"
+
+```javascript
+else if(userText.toLowerCase() === "reset"){
+    selectScene(0);  // Retourne à la première scène
+    return false;
+}
+```
+
+### ➕ Ajouter vos propres commandes
+
+**Exemple 1 : Commande "indice"**
+
+```javascript
+else if(userText.toLowerCase() === "indice"){
+    msg = `💡 Indice : Observe attentivement les couleurs et les formes...`;
+    addMessageToUI("assistant", msg);
+    laisseAIdecider = false;
+}
+```
+
+**Exemple 2 : Commande "sauter" pour passer à la scène suivante**
+
+```javascript
+else if(userText.toLowerCase() === "sauter"){
+    // Trouver l'index de la scène actuelle
+    const currentIndex = scenes.findIndex(s => s.id === scene.id);
+    if(currentIndex < scenes.length - 1){
+        selectScene(currentIndex + 1);
+        msg = "Passage à la scène suivante...";
+        addMessageToUI("assistant", msg);
+    } else {
+        msg = "Vous êtes déjà à la dernière scène !";
+        addMessageToUI("assistant", msg);
+    }
+    laisseAIdecider = false;
+}
+```
+
+**Exemple 3 : Commande contextuelle (selon la scène)**
+
+```javascript
+// À la fin de la fonction, AVANT le return
+if(scene.id === "scene-van-gogh" && userText.toLowerCase().includes("folie")){
+    msg = `\n\n📚 Note historique : Van Gogh a effectivement souffert de troubles mentaux, 
+mais cela ne diminue en rien son génie artistique.`;
+    addMessageToUI("assistant", msg);
+    // On garde laisseAIdecider = true pour que l'IA réponde aussi
+}
+```
+
+### 🎯 Bonnes pratiques
+
+✅ **À faire :**
+- Utilisez `.toLowerCase()` pour ignorer la casse
+- Retournez `false` quand vous gérez complètement la commande
+- Utilisez `else if` pour éviter de vérifier toutes les conditions
+
+❌ **À éviter :**
+- Ne gérez pas tout avec des commandes (laissez l'IA faire son travail)
+- N'oubliez pas le `return` à la fin
+- Ne modifiez pas directement `chatHistory` (laissez `app.js` s'en charger)
+
+---
+
+## 🔧 Fichier 3 : `prompt.js` — Personnaliser la construction du prompt
+
+### 🎯 Rôle du fichier
+
+`prompt.js` contient la fonction `buildSystemPromptForScene()` qui **transforme** le `systemPrompt` d'une scène avant de l'envoyer à l'IA.
+
+### 📝 Fonction actuelle
+
+```javascript
+function buildSystemPromptForScene(scene){
+  let p = (scene.systemPrompt || "").trim();
+
+  // Option pratique : injection de la liste des scènes
+  if (p.includes("{{SCENES_LIST}}")) {
+    const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
+    p = p.replaceAll("{{SCENES_LIST}}", list);
+  }
+
+  return p;
+}
+```
+
+### 🔄 Ajouter vos propres transformations
+
+#### Exemple 1 : Injecter le nom de l'utilisateur
+
+```javascript
+function buildSystemPromptForScene(scene){
+  let p = (scene.systemPrompt || "").trim();
+
+  // Remplacement de {{SCENES_LIST}}
+  if (p.includes("{{SCENES_LIST}}")) {
+    const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
+    p = p.replaceAll("{{SCENES_LIST}}", list);
+  }
+
+  // Nouveau : Injecter le nom de l'utilisateur
+  if (p.includes("{{USER_NAME}}")) {
+    p = p.replaceAll("{{USER_NAME}}", userName);
+  }
+
+  return p;
+}
+```
+
+**Utilisation dans `data.js` :**
+```javascript
+systemPrompt: `
+  Tu accompagnes {{USER_NAME}} dans l'observation de cette œuvre...
+`
+```
+
+#### Exemple 2 : Injecter la date actuelle
+
+```javascript
+function buildSystemPromptForScene(scene){
+  let p = (scene.systemPrompt || "").trim();
+
+  if (p.includes("{{SCENES_LIST}}")) {
+    const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
+    p = p.replaceAll("{{SCENES_LIST}}", list);
+  }
+
+  // Injecter la date du jour
+  if (p.includes("{{TODAY}}")) {
+    const today = new Date().toLocaleDateString('fr-FR');
+    p = p.replaceAll("{{TODAY}}", today);
+  }
+
+  return p;
+}
+```
+
+#### Exemple 3 : Contexte selon le numéro de scène
+
+```javascript
+function buildSystemPromptForScene(scene){
+  let p = (scene.systemPrompt || "").trim();
+
+  if (p.includes("{{SCENES_LIST}}")) {
+    const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
+    p = p.replaceAll("{{SCENES_LIST}}", list);
+  }
+
+  // Ajouter un contexte selon la position dans la galerie
+  const sceneIndex = scenes.findIndex(s => s.id === scene.id);
+  if(sceneIndex === 0){
+    p += "\n\nNote : C'est la première œuvre de la visite. Sois accueillant.";
+  } else if(sceneIndex === scenes.length - 1){
+    p += "\n\nNote : C'est la dernière œuvre. Propose une synthèse de la visite.";
+  }
+
+  return p;
+}
+```
+
+---
+
+## 📊 Récapitulatif des fichiers
+
+| Action | Fichier | Méthode |
+|--------|---------|---------|
+| Ajouter une œuvre | `data.js` | Ajouter un objet dans `scenes[]` |
+| Définir le comportement de l'IA | `data.js` | Modifier le `systemPrompt` |
+| Changer le mot-clé de transition | `data.js` | Modifier la section "Déclenchement" du `systemPrompt` |
+| Ajouter une commande spéciale | `manip.js` | Ajouter un `else if` dans `beforeAI()` |
+| Créer des variables dynamiques | `prompt.js` | Ajouter des remplacements dans `buildSystemPromptForScene()` |
+
+---
+
+## 🚀 Workflow complet : Ajouter une nouvelle œuvre
+
+### Étape 1 : Préparer votre image
+1. Placez votre image dans `assets/img/`
+2. Nommez-la clairement (ex: `05-dali-persistence.jpg`)
+
+### Étape 2 : Créer la scène dans `data.js`
+
+```javascript
+const scenes = [
+  // ... scènes existantes ...
+  {
+    id: "scene-art-05",
+    title: "La Persistance de la mémoire",
+    imageUrl: "assets/img/05-dali-persistence.jpg",
+    chatHistory: [],
+    temperature: 0.4,  // Un peu plus créatif pour Dalí
+    firstUserMessage: "Bonjour, ce tableau me perturbe...",
+    systemPrompt: `
+      Tu es un guide énigmatique et poétique, spécialiste du surréalisme.
+      
+      Tu accompagnes l'utilisateur dans l'observation de 
+      « La Persistance de la mémoire » de Salvador Dalí (1931).
+      
+      Règles de comportement :
+      - Tu encourages l'acceptation de l'étrangeté et du rêve
+      - Tu poses des questions sur les sensations d'absurdité
+      - Tu valorises l'imagination et l'inconscient
+      - Tu évites les explications rationnelles trop rapides
+      
+      Objectif pédagogique :
+      Faire comprendre que le surréalisme explore l'inconscient et 
+      les rêves, en défiant la logique du monde réel.
+      
+      Gestion de la progression :
+      - Après **le deuxième message de l'utilisateur**, tu dois conclure
+      - La conclusion doit être claire, brève (4-6 phrases)
+      
+      Déclenchement de la scène suivante :
+      - Lorsque l'utilisateur tape le mot-clé exact « rêve »
+        **ou** lorsque tu conclus pédagogiquement,
+        tu termines ton message en incluant exactement :
+        <!-- GOTO:scene-art-06 -->
+      - Tu indiques explicitement que l'œuvre suivante a été débloquée.
+    `
+  }
+];
+```
+
+### Étape 3 : Mettre à jour la scène précédente
+
+Dans la scène `scene-art-04`, changez le `GOTO` :
+
+```javascript
+<!-- GOTO:scene-art-05 -->  // Au lieu de scene-art-04 ou rien
+```
+
+### Étape 4 : (Optionnel) Ajouter une commande spéciale
+
+Dans `manip.js`, ajoutez par exemple :
+
+```javascript
+else if(userText.toLowerCase() === "dali" && scene.id === "scene-art-05"){
+    msg = `🎨 Salvador Dalí (1904-1989) était connu pour sa moustache 
+extravagante et son excentricité, autant que pour son génie artistique !`;
+    addMessageToUI("assistant", msg);
+    laisseAIdecider = false;
+}
+```
+
+### Étape 5 : Tester !
+
+1. Ouvrez `index.html` dans votre navigateur
+2. Naviguez jusqu'à votre nouvelle scène
+3. Testez l'interaction avec l'IA
+4. Vérifiez que la transition fonctionne
+
+---
+
+## 🐛 Débogage courant
+
+### Problème 1 : La scène ne s'affiche pas
+
+**Solution :**
+- Vérifiez que l'`id` est unique
+- Vérifiez que le chemin `imageUrl` est correct
+- Ouvrez la console du navigateur (F12) pour voir les erreurs
+
+### Problème 2 : La transition ne fonctionne pas
+
+**Solution :**
+- Vérifiez que le marqueur `<!-- GOTO:scene-XXX -->` est exactement comme ça
+- Vérifiez que l'`id` cible existe dans `scenes[]`
+- Vérifiez que le `systemPrompt` demande bien à l'IA d'inclure ce marqueur
+
+### Problème 3 : L'IA ne suit pas les instructions
+
+**Solution :**
+- Soyez plus **explicite** dans le `systemPrompt`
+- Utilisez des **exemples** de ce que vous attendez
+- Baissez la `temperature` pour plus de cohérence
+- Relisez votre prompt : est-il clair et non ambigu ?
+
+### Problème 4 : Ma commande dans `manip.js` ne marche pas
+
+**Solution :**
+- Vérifiez que vous utilisez `userText.toLowerCase()` pour la comparaison
+- Vérifiez que vous retournez bien `false` si vous gérez la commande
+- Vérifiez qu'il n'y a pas de `return` prématuré avant votre condition
+
+---
+
+## 📚 Exemples de prompts pour différents styles
+
+### Style pédagogique classique
+
+```javascript
+systemPrompt: `
+  Tu es un professeur d'histoire de l'art expérimenté.
+  
+  Tu utilises la méthode socratique : tu poses des questions 
+  pour amener l'élève à découvrir par lui-même.
+  
+  Tu es patient, encourageant et structuré dans tes explications.
+`
+```
+
+### Style ludique et engageant
+
+```javascript
+systemPrompt: `
+  Tu es un guide enthousiaste et passionné, comme un animateur de musée 
+  qui adore partager son amour de l'art.
+  
+  Tu utilises des métaphores, des comparaisons et des anecdotes 
+  pour rendre l'art accessible et amusant.
+  
+  Tu n'hésites pas à utiliser des émojis pour dynamiser tes réponses. 🎨
+`
+```
+
+### Style mystérieux et immersif
+
+```javascript
+systemPrompt: `
+  Tu es un personnage mystérieux qui semble connaître les secrets 
+  cachés derrière chaque œuvre.
+  
+  Tu parles de manière poétique et énigmatique, en laissant 
+  planer le mystère sans tout révéler d'un coup.
+  
+  Tu poses des questions qui invitent à la contemplation profonde.
+`
+```
+
+### Style scientifique et analytique
+
+```javascript
+systemPrompt: `
+  Tu es un conservateur de musée spécialiste en analyse technique des œuvres.
+  
+  Tu t'intéresses aux techniques picturales, aux pigments utilisés, 
+  à la composition géométrique et au contexte historique précis.
+  
+  Tu restes accessible mais tu n'hésites pas à utiliser le vocabulaire 
+  technique approprié quand c'est nécessaire.
+`
+```
+
+---
+
+## 🎓 Exercices pratiques
+
+### Exercice 1 : Créer une nouvelle scène
+1. Choisissez une œuvre d'art qui vous plaît
+2. Trouvez une image de cette œuvre
+3. Créez une nouvelle scène complète dans `data.js`
+4. Définissez un objectif pédagogique clair
+5. Choisissez un mot-clé de transition approprié
+
+### Exercice 2 : Ajouter une commande "citation"
+1. Dans `manip.js`, ajoutez une commande `citation`
+2. Cette commande doit afficher une citation célèbre sur l'art
+3. La citation peut changer selon la scène actuelle
+
+### Exercice 3 : Créer un parcours thématique
+1. Créez 3 scènes sur un thème commun (ex: "Portraits", "Paysages", "Art abstrait")
+2. Assurez-vous que les transitions sont cohérentes
+3. Ajoutez une synthèse finale dans la dernière scène
+
+### Exercice 4 : Variable dynamique personnalisée
+1. Dans `prompt.js`, créez une variable `{{MOOD}}`
+2. Cette variable doit refléter le "ton" de la scène (joyeux, mélancolique, etc.)
+3. Utilisez-la dans vos `systemPrompt`
+
+---
+
+## ✅ Checklist avant de soumettre votre projet
+
+- [ ] Toutes mes scènes ont un `id` unique
+- [ ] Toutes mes images sont présentes dans `assets/img/`
+- [ ] Chaque `systemPrompt` définit clairement l'objectif pédagogique
+- [ ] Les transitions entre scènes fonctionnent (marqueurs `GOTO`)
+- [ ] J'ai testé toutes mes commandes personnalisées dans `manip.js`
+- [ ] Mon code est indenté et lisible
+- [ ] J'ai commenté les parties complexes de mon code
+- [ ] J'ai vérifié qu'il n'y a pas d'erreurs dans la console (F12)
+- [ ] L'expérience utilisateur est fluide et agréable
+
+---
+
+## 💡 Conseils finaux
+
+### 🎨 Pour de bons `systemPrompt`
+
+1. **Soyez spécifique** : "Tu poses des questions sur les couleurs" plutôt que "Tu es sympa"
+2. **Donnez des exemples** : Montrez à l'IA le type de réponse que vous voulez
+3. **Limitez la longueur** : 2-3 échanges max par scène pour garder le rythme
+4. **Testez et ajustez** : Le prompt engineering est itératif !
+
+### 🔧 Pour de bonnes commandes
+
+1. **Simplicité** : Commandes courtes et mémorables ("aide", "indice", "reset")
+2. **Cohérence** : Gardez le même style de commandes partout
+3. **Documentation** : Affichez les commandes disponibles avec "aide"
+
+### 🎯 Pour une bonne expérience
+
+1. **Progressivité** : Commencez simple, complexifiez progressivement
+2. **Feedback** : L'utilisateur doit toujours savoir ce qui se passe
+3. **Clarté** : Les transitions doivent être évidentes et fluides
+
+---
+
+## 📖 Ressources complémentaires
+
+- [Documentation de l'API Claude](https://docs.anthropic.com/)
+- [Guide du prompt engineering](https://docs.anthropic.com/claude/docs/introduction-to-prompt-design)
+- [Markdown guide](https://www.markdownguide.org/) (pour formatter les réponses de l'IA)
+
+---
+
+## 🆘 Besoin d'aide ?
+
+Si vous rencontrez un problème :
+
+1. **Vérifiez la console** (F12 dans le navigateur)
+2. **Relisez ce guide** (la réponse est souvent là !)
+3. **Testez par petits morceaux** (isolez le problème)
+4. **Demandez à votre professeur** avec un exemple précis du problème
+
+---
+
+**Bonne création ! 🎨✨**
+
+N'oubliez pas : l'art et la programmation ont beaucoup en commun — ce sont tous deux des formes de créativité qui demandent de la patience, de la pratique et de l'expérimentation. Ne vous découragez pas si tout ne marche pas du premier coup !
