@@ -2,7 +2,8 @@
 
 - [API ChatGPT — Guide de fonctionnement](#api-chatgpt--guide-de-fonctionnement)
   - [Contexte, tokens, historique et implémentation en javascript](#contexte-tokens-historique-et-implémentation-en-javascript)
-  - [1. Principe fondamental : API stateless](#1-principe-fondamental--api-stateless)
+  - [0. Qu'est-ce qu'une API ?](#0-quest-ce-quune-api-)
+  - [1. Principe fondamental : l'API chatgpt est stateless](#1-principe-fondamental--lapi-chatgpt-est-stateless)
   - [2. Architecture d’une requête](#2-architecture-dune-requête)
     - [Structure minimale](#structure-minimale)
   - [3. Le tableau `input`](#3-le-tableau-input)
@@ -27,7 +28,29 @@ Ce document décrit le fonctionnement d’une requête à l’API ChatGPT : gest
 
 ---
 
-## 1. Principe fondamental : API stateless
+## 0. Qu'est-ce qu'une API ?
+
+Une API (Application Programming Interface) est une interface qui permet à des programmes de communiquer entre eux. Dans le cas de l’API ChatGPT, elle permet à votre programme d’envoyer des requêtes à ChatGPT et de recevoir des réponses, sans passer par une interface utilisateur graphique. L’API est un point d’entrée pour interagir avec le modèle de langage de manière programmatique.
+
+**Une API définit :**
+
+- ce que tu peux demander (ex : “la météo étant donné une position gps”)
+- comment le demander (format, URL, paramètres)
+- ce que tu reçois en retour (souvent du JSON)
+- les règles d’utilisation (limites, coûts, etc.)
+
+**Exemples d’API :**
+
+- API de géolocalisation : obtenir la position d’un utilisateur à partir de son adresse IP
+- API de traduction : traduire du texte d’une langue à une autre
+- API de paiement : traiter des transactions financières en ligne
+- API de ChatGPT : envoyer des requêtes textuelles et recevoir des réponses générées par le modèle de langage
+- API de reconnaissance d’image : analyser une image et en extraire des informations (ex : Google Vision API)
+- API de données météorologiques : obtenir les prévisions météo pour une localisation donnée (ex : OpenWeatherMap API)
+
+---
+
+## 1. Principe fondamental : l'API chatgpt est stateless
 
 L’API ChatGPT est **stateless**.
 
@@ -58,7 +81,7 @@ La requête est un fichier json dont voici un exemple minimal :
 ```json
 {
   "model": "gpt-4.1",
-  "input": [
+  "input": ["
     { "role": "system", "content": "Tu es un assistant pédagogique clair et précis." },
     { "role": "user", "content": "Explique le concept de token." }
   ]
@@ -84,7 +107,7 @@ Chaque entrée du tableau contient :
 - content : contenu textuel
 
 ⚠️ L’ordre des entrées est critique.
-💡 Si ce n’est pas dans input, ça n’existe pas.
+💡 Si ce n’est pas dans `input`, ça n’existe pas.
 ChatGPT n’a pas de mémoire.
 C’est ton JSON qui se souvient.
 
@@ -259,10 +282,10 @@ Un token est une unité de texte utilisée par le modèle pour lire et produire 
 
 ## 10. Erreurs courantes
 
-- ❌ Oublier de renvoyer les entrées assistant
-- ❌ Changer l’ordre des entrées
-- ❌ Croire que ChatGPT “se souvient”
-- ❌ Envoyer seulement la dernière question
+  ❌ Oublier de renvoyer les entrées assistant
+  ❌ Changer l’ordre des entrées
+  ❌ Croire que ChatGPT “se souvient”
+  ❌ Envoyer seulement la dernière question
 
 ## 11. Résumé
 
