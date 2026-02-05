@@ -81,7 +81,7 @@ La requête est un fichier json dont voici un exemple minimal :
 ```json
 {
   "model": "gpt-4.1",
-  "input": ["
+  "input": [
     { "role": "system", "content": "Tu es un assistant pédagogique clair et précis." },
     { "role": "user", "content": "Explique le concept de token." }
   ]
