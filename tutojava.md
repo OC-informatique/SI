@@ -42,6 +42,7 @@ Bienvenue dans ce guide qui vous explique les bases du développement web front-
     - [En résumé](#en-résumé)
   - [Partie 6 : Ressources pour aller plus loin](#partie-6--ressources-pour-aller-plus-loin)
   - [Conclusion](#conclusion)
+  - [Questions fréquentes](#questions-fréquentes)
 
 ---
 
@@ -647,6 +648,23 @@ Vous avez maintenant les connaissances de base pour comprendre et modifier votre
 4. **Consultez ce tutoriel** quand vous avez un doute
 
 **N'oubliez pas :** Chaque développeur, même expérimenté, consulte régulièrement la documentation et fait des erreurs. C'est normal et ça fait partie de l'apprentissage !
+
+---
+
+## Questions fréquentes
+
+**Q : J'ai modifié mon code mais rien ne change dans le navigateur ?**  
+→ Rechargez la page avec `Ctrl + F5` (Windows) ou `Cmd + Shift + R` (Mac).
+
+**Q : J'ai une erreur "Cannot read property of null" ?**  
+→ Vérifiez que l'ID de l'élément HTML existe et est correctement orthographié.
+
+**Q : Comment savoir si mon JavaScript est chargé ?**  
+→ Ajoutez `console.log("Script chargé !")` au début de votre fichier JS et vérifiez dans la console.
+
+**Q : Où trouver de l'aide sur mon projet spécifique ?**  
+→ Consultez le tutoriel de personnalisation de la galerie qui explique `data.js`, `manip.js` et `prompt.js`.
+
 
 **Bon développement ! 🚀**
 
