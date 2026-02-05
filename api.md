@@ -141,9 +141,9 @@ Réponses précédentes du modèle, à renvoyer pour maintenir le contexte.
 
 ### Le contexte : règle absolue
 
-❌ Le modèle ne se souvient de rien.
-❌ Il n’existe aucune mémoire implicite.
-✅ Le contexte = l’intégralité du tableau `input` envoyé.
+- ❌ Le modèle ne se souvient de rien.
+- ❌ Il n’existe aucune mémoire implicite.
+- ✅ Le contexte = l’intégralité du tableau `input` envoyé.
 
 ---
 
@@ -282,10 +282,10 @@ Un token est une unité de texte utilisée par le modèle pour lire et produire 
 
 ## 10. Erreurs courantes
 
-  ❌ Oublier de renvoyer les entrées assistant
-  ❌ Changer l’ordre des entrées
-  ❌ Croire que ChatGPT “se souvient”
-  ❌ Envoyer seulement la dernière question
+-  ❌ Oublier de renvoyer les entrées assistant
+-  ❌ Changer l’ordre des entrées
+-  ❌ Croire que ChatGPT “se souvient”
+-  ❌ Envoyer seulement la dernière question
 
 ## 11. Résumé
 
