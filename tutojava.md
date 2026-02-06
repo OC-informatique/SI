@@ -474,7 +474,7 @@ if (estMajeur(20)) {
 ### 📌 Dans votre projet
 
 Vous utiliserez souvent :
-- **Variables** : `userName`, `scenes`, `chatHistory`
+- **Variables** : `promptVars.userName`, `scenes`, `chatHistory`
 - **Conditions** : pour gérer les commandes dans `manip.js`
 - **Fonctions** : `beforeAI()`, `buildSystemPromptForScene()`, etc.
   
