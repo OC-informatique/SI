@@ -5,6 +5,9 @@ Bienvenue dans ce guide qui vous explique **pas à pas** comment personnaliser v
 ---
 
 ## Table des matières
+
+- [Tutoriel complet : Personnaliser votre galerie interactive avec IA](#tutoriel-complet--personnaliser-votre-galerie-interactive-avec-ia)
+  - [Table des matières](#table-des-matières)
   - [Vue d'ensemble du projet](#vue-densemble-du-projet)
   - [Fichier 1 : `data.js` — Définir vos scènes](#fichier-1--datajs--définir-vos-scènes)
     - [Mot de passe](#mot-de-passe)
@@ -68,12 +71,13 @@ Bienvenue dans ce guide qui vous explique **pas à pas** comment personnaliser v
     - [Pour de bonnes commandes](#pour-de-bonnes-commandes)
     - [Pour une bonne expérience](#pour-une-bonne-expérience)
   - [Besoin d'aide ?](#besoin-daide-)
+  - [Questions fréquentes](#questions-fréquentes)
 
 ---
 
 ## Vue d'ensemble du projet
 
-Votre projet se compose de plusieurs fichiers JavaScript. Vous allez principalement modifier **quatres fichiers** :
+Votre projet se compose de plusieurs fichiers JavaScript. Vous allez principalement modifier **quatre fichiers** :
 
 | Fichier | Rôle | Ce que vous devez faire |
 |---------|------|------------------------|
@@ -157,6 +161,24 @@ temperature: 0.3
 - `0.5` → Équilibre entre précision et créativité
 - `1.0` → Réponses très créatives et variées
 - **Conseil** : Gardez `0.3` pour un guide pédagogique stable
+
+**Exemples pratiques :**
+
+```javascript
+temperature: 0.0   // Réponses très prévisibles, toujours similaires
+                   // → Bon pour : questions factuelles, définitions
+
+temperature: 0.3   // Légèrement créatif tout en restant cohérent
+                   // → Bon pour : guides pédagogiques (RECOMMANDÉ)
+
+temperature: 0.7   // Plus de variété dans les réponses
+                   // → Bon pour : discussions créatives
+
+temperature: 1.0   // Maximum de créativité, parfois surprenant
+                   // → Bon pour : poésie, histoires, brainstorming
+```
+
+**Pour votre projet :** Gardez `0.3` sauf si vous voulez un guide très poétique (0.5-0.7).
 
 #### **`firstUserMessage`** — Le message d'accueil
 
@@ -259,7 +281,7 @@ Les transitions se font via un **marqueur spécial** que l'IA inclut dans sa ré
    - Quand l'IA a **terminé son objectif pédagogique**
 3. Quand l'IA inclut ce marqueur, `app.js` détecte automatiquement et charge la scène suivante
 
-**Exemple pratique :**
+**Exemple pratique (à inclure dans le systemPrompt) :**
 
 ```javascript
 Déclenchement de la scène suivante :
@@ -269,6 +291,8 @@ Déclenchement de la scène suivante :
   <!-- GOTO:scene-art-03 -->
 - Tu indiques explicitement que l'œuvre suivante a été débloquée.
 ```
+
+
 
 ### Ajouter une nouvelle scène
 
@@ -371,7 +395,7 @@ if(userText.toLowerCase() === "aide"){
 
 ```javascript
 else if(userText.toLowerCase() === "nom"){
-    msg = "Tu t'appelles " + userName + ".";
+    msg = "Tu t'appelles " + promptVars.userName + ".";
     msg += `\n\nSi tu veux changer de nom
 écris "mon nom est X", en écrivant ton nom à la place de X.`;
     addMessageToUI("assistant", msg);
@@ -384,8 +408,9 @@ else if(userText.toLowerCase() === "nom"){
 ```javascript
 else if(userText.toLowerCase().startsWith("mon nom est ")){
     const newName = userText.substring("mon nom est ".length).trim();
-    userName = newName;
-    msg = "Tu t'appelles dorénavant " + userName;
+    promptVars.userName = newName;// Mise à jour dans promptVars
+    msg = "Tu t'appelles dorénavant " + promptVars.userName;
+    msg += "\nCe nom sera utilisé dans toutes les scènes.";
     addMessageToUI("assistant", msg);
     laisseAIdecider = false;
 }
@@ -496,7 +521,7 @@ function buildSystemPromptForScene(scene){
 
   // Nouveau : Injecter le nom de l'utilisateur
   if (p.includes("{{USER_NAME}}")) {
-    p = p.replaceAll("{{USER_NAME}}", userName);
+    p = p.replaceAll("{{USER_NAME}}", promptVars.userName);
   }
 
   return p;
@@ -633,7 +658,6 @@ else if(userText.toLowerCase().startsWith("mon age est ")){
 
 - Ne mettez pas de données sensibles dans ce fichier
 - N'utilisez pas d'espaces dans les noms de variables
-- Ne confondez pas `promptVars` avec les variables de `manip.js` (comme `userName`)
 
 ---
 
@@ -906,6 +930,31 @@ Si vous rencontrez un problème :
 2. **Relisez ce guide** (la réponse est souvent là !)
 3. **Testez par petits morceaux** (isolez le problème)
 4. **Demandez à votre professeur** avec un exemple précis du problème
+
+
+---
+
+## Questions fréquentes
+
+**Q : Le mot de passe ne fonctionne pas, que faire ?**
+→ Vérifiez que vous avez bien copié le mot de passe complet depuis Moodle, avec les guillemets. Si le problème persiste, contactez votre enseignant.
+
+**Q : L'IA ne répond plus, que se passe-t-il ?**
+→ Vérifiez la console (F12) pour voir s'il y a des erreurs. Cela peut être dû à un quota dépassé ou à une erreur dans votre code.
+
+<!--
+**Q : Comment savoir combien de crédits mon groupe a utilisés ?**
+→ Consultez le tableau de suivi sur Moodle qui est mis à jour régulièrement.
+
+**Q : Puis-je tester mon code sans utiliser de crédits ?**
+→ Oui ! Vous pouvez tester toutes les commandes dans `manip.js` (aide, nom, reset, etc.) sans appeler l'IA. Seules les réponses générées par l'IA consomment des crédits.
+--->
+
+**Q : La transition ne se déclenche pas, pourquoi ?**
+→ Vérifiez que l'IA inclut bien `<!-- GOTO:scene-XXX -->` dans sa réponse. Vous pouvez le voir dans la console ou dans le panneau de debug.
+
+**Q : Comment voir ce qui est envoyé à l'IA ?**
+→ Cliquez sur le bouton "Debug" dans l'interface pour voir le JSON envoyé et reçu.
 
 ---
 
