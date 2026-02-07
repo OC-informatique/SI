@@ -188,7 +188,7 @@ systemPrompt: `
    - Les **questions** qu'il pose
    - Comment il vous amène vers l'**objectif pédagogique**
 
-> 📖 **Pour aller plus loin** : Consultez la section [Structure d'un bon systemPrompt](https://oc-informatique.github.io/SI/tutoriel-complet.md#structure-dun-bon-systemprompt) du tutoriel complet.
+> 📖 **Pour aller plus loin** : Consultez la section [Structure d'un bon systemPrompt](https://oc-informatique.github.io/SI/tutorial#structure-dun-bon-systemprompt) du tutoriel complet.
 
 ---
 
