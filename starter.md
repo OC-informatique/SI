@@ -423,7 +423,7 @@ Maintenant que vous avez pris en main le projet, vous pouvez :
 
 **Problème technique :**
 1. Vérifiez la console (F12)
-2. Consultez la [section Débogage](https://oc-informatique.github.io/SI/tutorial.md#débogage-courant)
+2. Consultez la [section Débogage](https://oc-informatique.github.io/SI/tutorial#débogage-courant)
 3. Demandez à votre enseignant avec un exemple précis
 
 **Question sur le projet :**
