@@ -1,3 +1,15 @@
+<nav>
+
+
+| [ Démarrage](https://oc-informatique.github.io/SI/starter)
+| [ Tutoriel complet](https://oc-informatique.github.io/SI/tutorial)
+| [ Web Front-End](https://oc-informatique.github.io/SI/tutojava)
+| [L'API Chatgpt](https://oc-informatique.github.io/SI/api)
+
+</nav>
+
+---
+
 # Guide de démarrage rapide : Galerie interactive avec IA
 
 Bienvenue ! Ce guide vous accompagne dans vos **premiers pas** avec le projet de galerie interactive. Pour des explications détaillées, consultez le [tutoriel complet](tutorial).
