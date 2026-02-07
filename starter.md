@@ -75,7 +75,7 @@ galerie-interactive/
 
 ## Étape 2 : Configurer votre mot de passe API
 
-**Pourquoi ?** L'application utilise l'API OpenAI (ChatGPT) pour générer les réponses du compagnon IA. Chaque groupe a un mot de passe unique qui nous permet de suivre votre consommation de [tokens](https://oc-informatique.github.io/SI/api).
+**Pourquoi ?** L'application utilise l'API OpenAI (ChatGPT) pour générer les réponses du compagnon IA. Chaque groupe a un mot de passe unique qui nous permet de suivre votre consommation de [tokens](api#9-tokens).
 
 **Comment faire :**
 
