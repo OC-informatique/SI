@@ -1,3 +1,14 @@
+<nav>
+
+| [ Démarrage](https://oc-informatique.github.io/SI/starter)
+| [ Tutoriel complet](https://oc-informatique.github.io/SI/tutorial)
+| [ Web Front-End](https://oc-informatique.github.io/SI/tutojava)
+| [L'API Chatgpt](https://oc-informatique.github.io/SI/api)
+
+</nav>
+
+---
+
 # API ChatGPT — Guide de fonctionnement
 
 - [API ChatGPT — Guide de fonctionnement](#api-chatgpt--guide-de-fonctionnement)
