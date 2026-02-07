@@ -1,3 +1,14 @@
+<nav>
+
+| [ Démarrage](https://oc-informatique.github.io/SI/starter)
+| [ Tutoriel complet](https://oc-informatique.github.io/SI/tutorial)
+| [ Web Front-End](https://oc-informatique.github.io/SI/tutojava)
+| [L'API Chatgpt](https://oc-informatique.github.io/SI/api)
+
+</nav>
+
+---
+
 # Tutoriel complet : Personnaliser votre galerie interactive avec IA
 
 Bienvenue dans ce guide qui vous explique **pas à pas** comment personnaliser votre galerie interactive. Vous allez apprendre à créer vos propres scènes, définir le comportement de l'IA et gérer les transitions entre les œuvres.
