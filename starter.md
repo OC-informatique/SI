@@ -1,6 +1,6 @@
 <nav>
 
- [ Démarrage](https://oc-informatique.github.io/SI/starter) | [ Tutoriel complet](https://oc-informatique.github.io/SI/tutorial) | [ Web Front-End](https://oc-informatique.github.io/SI/tutojava) | [L'API Chatgpt](https://oc-informatique.github.io/SI/api)
+ [ Démarrage](https://oc-informatique.github.io/SI/starter) | [ Tutoriel complet](https://oc-informatique.github.io/SI/tutorial) | [ Web Front-End](https://oc-informatique.github.io/SI/tutojava) | [L'API Chatgpt](https://oc-informatique.github.io/SI/api#9.-Tokens)
 
 </nav>
 
@@ -75,7 +75,7 @@ galerie-interactive/
 
 ## Étape 2 : Configurer votre mot de passe API
 
-**Pourquoi ?** L'application utilise l'API OpenAI (ChatGPT) pour générer les réponses du compagnon IA. Chaque groupe a un mot de passe unique pour suivre l'utilisation.
+**Pourquoi ?** L'application utilise l'API OpenAI (ChatGPT) pour générer les réponses du compagnon IA. Chaque groupe a un mot de passe unique qui nous permet de suivre votre consommation de [tokens](https://oc-informatique.github.io/SI/api).
 
 **Comment faire :**
 
