@@ -411,7 +411,7 @@ Maintenant que vous avez pris en main le projet, vous pouvez :
 
 **Documents essentiels :**
 - 📘 [Tutoriel complet](https://oc-informatique.github.io/SI/tutorial) — Guide détaillé de tous les fichiers
-- 📗 [Tutoriel Web Front-End](tutoriel-web-frontend.md) — Bases de HTML, CSS, JavaScript
+- 📗 [Tutoriel Web Front-End](tutojava) — Bases de HTML, CSS, JavaScript
 
 **En cas de problème :**
 - 🔧 [Section Débogage](https://oc-informatique.github.io/SI/tutorial#débogage-courant) — Solutions aux problèmes courants
