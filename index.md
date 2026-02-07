@@ -1,4 +1,4 @@
-# 🎨 Galerie interactive avec IA
+# Galerie interactive avec IA
 ### Mini-site pédagogique
 
 Bienvenue dans le projet **Galerie interactive avec IA**.  
@@ -11,7 +11,7 @@ Ce site vous guide pas à pas pour comprendre, modifier et créer votre propre g
 ## 🚀 Démarrer
 
 👉 **Première fois sur le projet ?**
-- 📗 [Guide de démarrage rapide](guide-demarrage/)
+- 📗 [Guide de démarrage rapide](starter)
 
 Ce guide vous permet de :
 - installer le projet
@@ -23,7 +23,7 @@ Ce guide vous permet de :
 ## 📘 Aller plus loin
 
 👉 **Pour comprendre en profondeur le fonctionnement du projet :**
-- 📘 [Tutoriel complet](tutorial/)
+- 📘 [Tutoriel complet](tutorial)
 
 Vous y trouverez :
 - le rôle de chaque fichier
@@ -36,7 +36,7 @@ Vous y trouverez :
 ## 💻 Bases Web (HTML / CSS / JavaScript)
 
 👉 **Besoin de revoir les bases techniques ?**
-- 💻 [Tutoriel Web Front-End](tutoriel-web-frontend/)
+- 💻 [Tutoriel Web Front-End](tutojava)
 
 Utile si vous avez des difficultés avec :
 - HTML
@@ -61,7 +61,6 @@ Vous y trouverez :
 
 ## 🧭 Conseils de navigation
 
-- Utilisez les **liens “Suivant / Précédent”** dans chaque page
 - Le **bouton retour du navigateur fonctionne**
 - Prenez le temps de **tester après chaque modification**
 
@@ -79,4 +78,4 @@ Prenez le temps d’explorer, tester, casser… et recommencer 😄
 ---
 
 ➡️ **Prêt à commencer ?**  
-👉 [Aller au guide de démarrage rapide](guide-demarrage/)
+👉 [Aller au guide de démarrage rapide](starter/)
