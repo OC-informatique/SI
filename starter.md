@@ -1,10 +1,11 @@
-<nav>
+<p>
+<a href="https://oc-informatique.github.io/SI/starter">Démarrage</a> |
+<a href="https://oc-informatique.github.io/SI/tutorial">Tutoriel complet</a> |
+<a href="https://oc-informatique.github.io/SI/tutojava">Web Front-End</a> |
+<a href="https://oc-informatique.github.io/SI/api">L’API ChatGPT</a>
+</p>
 
- [ Démarrage](https://oc-informatique.github.io/SI/starter) | [ Tutoriel complet](https://oc-informatique.github.io/SI/tutorial) | [ Web Front-End](https://oc-informatique.github.io/SI/tutojava) | [L'API Chatgpt](https://oc-informatique.github.io/SI/api)
-
-</nav>
-
----
+<hr>
 
 # Guide de démarrage rapide : Galerie interactive avec IA
 
