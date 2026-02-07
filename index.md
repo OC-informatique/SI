@@ -8,7 +8,7 @@ Ce site vous guide pas à pas pour comprendre, modifier et créer votre propre g
 
 ---
 
-## 🚀 Démarrer
+##  Démarrer
 
 👉 **Première fois sur le projet ?**
 - 📗 [Guide de démarrage rapide](starter)
@@ -20,10 +20,10 @@ Ce guide vous permet de :
 
 ---
 
-## 📘 Aller plus loin
+## Aller plus loin
 
 👉 **Pour comprendre en profondeur le fonctionnement du projet :**
-- 📘 [Tutoriel complet](tutorial)
+-  [Tutoriel complet](tutorial)
 
 Vous y trouverez :
 - le rôle de chaque fichier
@@ -43,19 +43,6 @@ Utile si vous avez des difficultés avec :
 - CSS
 - JavaScript
 - console et débogage
-
----
-
-## 🧰 Ressources & aide
-
-👉 **En cas de blocage ou pour approfondir :**
-- 🧰 [Ressources et aide](ressources/)
-
-Vous y trouverez :
-- conseils de débogage
-- erreurs fréquentes
-- liens utiles
-- rappels importants
 
 ---
 
