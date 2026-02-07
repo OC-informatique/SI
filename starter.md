@@ -300,7 +300,7 @@ systemPrompt: `
 - [ ] La conversation fonctionne toujours
 - [ ] Pas d'erreur dans la console (F12)
 
-> 📖 **Pour aller plus loin** : Consultez la section [Champs à personnaliser](tutoriel-complet.md#champs-à-personnaliser) du tutoriel complet.
+> 📖 **Pour aller plus loin** : Consultez la section [Champs à personnaliser](https://oc-informatique.github.io/SI/tutorial#champs-à-personnaliser) du tutoriel complet.
 
 ---
 
@@ -393,10 +393,10 @@ Uncaught ReferenceError: promptVars is not defined
 
 Maintenant que vous avez pris en main le projet, vous pouvez :
 
-1. ✅ **Créer vos propres scènes** → [Ajouter une nouvelle scène](tutoriel-complet.md#ajouter-une-nouvelle-scène)
-2. ✅ **Personnaliser les commandes** → [Fichier manip.js](tutoriel-complet.md#fichier-2--manipjs--gérer-les-commandes-prédéterminées)
-3. ✅ **Gérer les variables** → [Fichier promptVars.js](tutoriel-complet.md#fichier-4--promptvarsjs--gérer-les-variables-globales-pour-les-prompts)
-4. ✅ **Affiner les transitions** → [Système de transitions](tutoriel-complet.md#système-de-transitions-entre-scènes)
+1. ✅ **Créer vos propres scènes** → [Ajouter une nouvelle scène](https://oc-informatique.github.io/SI/tutorial#ajouter-une-nouvelle-scène)
+2. ✅ **Personnaliser les commandes** → [Fichier manip.js](https://oc-informatique.github.io/SI/tutorial#fichier-2--manipjs--gérer-les-commandes-prédéterminées)
+3. ✅ **Gérer les variables** → [Fichier promptVars.js](https://oc-informatique.github.io/SI/tutorial#fichier-4--promptvarsjs--gérer-les-variables-globales-pour-les-prompts)
+4. ✅ **Affiner les transitions** → [Système de transitions](https://oc-informatique.github.io/SI/tutorial#système-de-transitions-entre-scènes)
 
 **Workflow recommandé :**
 1. Planifiez d'abord (Étape 5)
