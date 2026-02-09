@@ -634,6 +634,7 @@ systemPrompt: `
 **Étape 3** : La fonction `replaceTemplates()` (dans `utils.js`) remplace automatiquement `{% raw %}{{userName}}{% endraw %}` par `"Alice"` et `{% raw %}{{age}}{% endraw %}` par `15` avant d'envoyer le prompt à l'IA.
 
 ### Ajouter vos propres variables
+
 ```javascript
 window.promptVars = {
   userName: "Alice",
@@ -645,6 +646,7 @@ window.promptVars = {
 ```
 
 **Utilisation dans `data.js` :**
+
 {% raw %}
 ```javascript
 systemPrompt: `
@@ -654,6 +656,7 @@ systemPrompt: `
 `
 ```
 {% endraw %}
+
 ### Modifier les variables dynamiquement
 
 Dans `manip.js`, vous pouvez changer les valeurs pendant l'exécution :
