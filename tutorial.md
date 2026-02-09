@@ -328,7 +328,7 @@ const scenes = [
 
 **Étape 3** : Mettez à jour le marqueur `GOTO` de la scène précédente pour pointer vers votre nouvelle scène
 
-### Utiliser {% raw %}{{SCENES_LIST}}{% endraw %} (optionnel)
+### Utiliser `{% raw %}{{SCENES_LIST}}{% endraw %}` (optionnel)
 
 Si vous voulez que l'IA connaisse **toutes les scènes disponibles**, vous pouvez écrire dans votre `systemPrompt` :
 {% raw %}
@@ -340,8 +340,8 @@ systemPrompt: `
   Tu peux mentionner ces œuvres dans tes explications...
 `
 ```
-{%endraw %}
-La fonction `buildSystemPromptForScene()` remplacera automatiquement `{{SCENES_LIST}}` par :
+{% endraw %}
+La fonction `buildSystemPromptForScene()` remplacera automatiquement `{% raw %}{{SCENES_LIST}}{% endraw %}` par :
 
 ```
 - scene-art-02 — Impression, soleil levant
@@ -499,7 +499,7 @@ mais cela ne diminue en rien son génie artistique.`;
 `prompt.js` contient la fonction `buildSystemPromptForScene()` qui **transforme** le `systemPrompt` d'une scène avant de l'envoyer à l'IA.
 
 ### Fonction actuelle
-
+{% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
   let p = (scene.systemPrompt || "").trim();
@@ -513,11 +513,11 @@ function buildSystemPromptForScene(scene){
   return p;
 }
 ```
-
+{% endraw %}
 ### Ajouter vos propres transformations
 
 #### Exemple 1 : Injecter le nom de l'utilisateur
-
+{% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
   let p = (scene.systemPrompt || "").trim();
@@ -536,7 +536,7 @@ function buildSystemPromptForScene(scene){
   return p;
 }
 ```
-
+{% endraw %}
 **Utilisation dans `data.js` :**
 
 ```javascript
@@ -546,7 +546,7 @@ systemPrompt: `
 ```
 
 #### Exemple 2 : Injecter la date actuelle
-
+{% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
   let p = (scene.systemPrompt || "").trim();
@@ -565,9 +565,9 @@ function buildSystemPromptForScene(scene){
   return p;
 }
 ```
-
+{% endraw %}
 #### Exemple 3 : Contexte selon le numéro de scène
-
+{% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
   let p = (scene.systemPrompt || "").trim();
@@ -588,7 +588,7 @@ function buildSystemPromptForScene(scene){
   return p;
 }
 ```
-
+{% endraw %}
 ---
 
 ## Fichier 4 : `promptVars.js` — Gérer les variables globales pour les prompts
@@ -610,15 +610,15 @@ window.promptVars = {
 
 **Étape 1** : Vous définissez vos variables dans `promptVars.js`
 
-**Étape 2** : Vous les utilisez dans vos prompts avec la syntaxe `{{nomVariable}}`
+**Étape 2** : Vous les utilisez dans vos prompts avec la syntaxe `{% raw %}{{nomVariable}}{% endraw %}`
 
 ```javascript
 systemPrompt: `
-  Tu accompagnes l'utilisateur nommé {{userName}}, âgé de {{age}} ans...
+  Tu accompagnes l'utilisateur nommé {% raw %}{{userName}}{% endraw %}, âgé de {% raw %}{{age}}{% endraw %} ans...
 `
 ```
 
-**Étape 3** : La fonction `replaceTemplates()` (dans `utils.js`) remplace automatiquement `{{userName}}` par `"Alice"` et `{{age}}` par `15` avant d'envoyer le prompt à l'IA.
+**Étape 3** : La fonction `replaceTemplates()` (dans `utils.js`) remplace automatiquement `{% raw %}{{userName}}{% endraw %}` par `"Alice"` et `{% raw %}{{age}}{% endraw %}` par `15` avant d'envoyer le prompt à l'IA.
 
 ### Ajouter vos propres variables
 ```javascript
@@ -632,7 +632,7 @@ window.promptVars = {
 ```
 
 **Utilisation dans `data.js` :**
-
+{% raw %}
 ```javascript
 systemPrompt: `
   Tu t'adresses à {{userName}}, un visiteur {{niveau}} de {{age}} ans, 
@@ -640,7 +640,7 @@ systemPrompt: `
   Tu t'exprimes en {{langue}}.
 `
 ```
-
+{% endraw %}
 ### Modifier les variables dynamiquement
 
 Dans `manip.js`, vous pouvez changer les valeurs pendant l'exécution :
