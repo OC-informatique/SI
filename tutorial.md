@@ -328,10 +328,10 @@ const scenes = [
 
 **Étape 3** : Mettez à jour le marqueur `GOTO` de la scène précédente pour pointer vers votre nouvelle scène
 
-### Utiliser {{SCENES_LIST}} (optionnel)
+### Utiliser {% raw %}{{SCENES_LIST}}{% endraw %} (optionnel)
 
 Si vous voulez que l'IA connaisse **toutes les scènes disponibles**, vous pouvez écrire dans votre `systemPrompt` :
-
+{% raw %}
 ```javascript
 systemPrompt: `
   Voici les scènes disponibles dans cette galerie :
@@ -340,7 +340,7 @@ systemPrompt: `
   Tu peux mentionner ces œuvres dans tes explications...
 `
 ```
-
+{%endraw %}
 La fonction `buildSystemPromptForScene()` remplacera automatiquement `{{SCENES_LIST}}` par :
 
 ```
