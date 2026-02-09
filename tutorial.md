@@ -754,7 +754,9 @@ const scenes = [
 Dans la scène `scene-art-04`, changez le `GOTO` :
 
 ```javascript
+
 <!-- GOTO:scene-art-05 -->  // Au lieu de scene-art-04 ou rien
+
 ```
 
 ### Étape 4 : (Optionnel) Ajouter une commande spéciale
