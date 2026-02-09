@@ -499,6 +499,7 @@ mais cela ne diminue en rien son génie artistique.`;
 `prompt.js` contient la fonction `buildSystemPromptForScene()` qui **transforme** le `systemPrompt` d'une scène avant de l'envoyer à l'IA.
 
 ### Fonction actuelle
+
 {% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
@@ -514,9 +515,11 @@ function buildSystemPromptForScene(scene){
 }
 ```
 {% endraw %}
+
 ### Ajouter vos propres transformations
 
 #### Exemple 1 : Injecter le nom de l'utilisateur
+
 {% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
@@ -537,15 +540,19 @@ function buildSystemPromptForScene(scene){
 }
 ```
 {% endraw %}
+
 **Utilisation dans `data.js` :**
 
+{% raw %}
 ```javascript
 systemPrompt: `
   Tu accompagnes {{USER_NAME}} dans l'observation de cette œuvre...
 `
 ```
+{% endraw %}
 
 #### Exemple 2 : Injecter la date actuelle
+
 {% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
@@ -566,7 +573,9 @@ function buildSystemPromptForScene(scene){
 }
 ```
 {% endraw %}
+
 #### Exemple 3 : Contexte selon le numéro de scène
+
 {% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
@@ -589,6 +598,7 @@ function buildSystemPromptForScene(scene){
 }
 ```
 {% endraw %}
+
 ---
 
 ## Fichier 4 : `promptVars.js` — Gérer les variables globales pour les prompts
@@ -612,11 +622,14 @@ window.promptVars = {
 
 **Étape 2** : Vous les utilisez dans vos prompts avec la syntaxe `{% raw %}{{nomVariable}}{% endraw %}`
 
+{% raw %}
 ```javascript
 systemPrompt: `
-  Tu accompagnes l'utilisateur nommé {% raw %}{{userName}}{% endraw %}, âgé de {% raw %}{{age}}{% endraw %} ans...
+  Tu accompagnes l'utilisateur nommé {{userName}}, âgé de {age}} ans...
 `
 ```
+{% endraw %}
+
 
 **Étape 3** : La fonction `replaceTemplates()` (dans `utils.js`) remplace automatiquement `{% raw %}{{userName}}{% endraw %}` par `"Alice"` et `{% raw %}{{age}}{% endraw %}` par `15` avant d'envoyer le prompt à l'IA.
 
