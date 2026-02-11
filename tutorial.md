@@ -525,45 +525,13 @@ Si c'est le cas elle va remplacer dans p {% raw %}{{nomvar}}{% endraw %} par sa 
 
 ### Ajouter vos propres transformations
 
-#### Exemple 1 : Injecter le nom de l'utilisateur
+#### Exemple 1 : Injecter la date actuelle
 
 {% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
   let p = (scene.systemPrompt || "").trim();
-
-  // Remplacement de {{SCENES_LIST}}
-  if (p.includes("{{SCENES_LIST}}")) {
-    const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
-    p = p.replaceAll("{{SCENES_LIST}}", list);
-  }
-
-  // Nouveau : Injecter le nom de l'utilisateur
-  if (p.includes("{{USER_NAME}}")) {
-    p = p.replaceAll("{{USER_NAME}}", promptVars.userName);
-  }
-
-  return p;
-}
-```
-{% endraw %}
-
-**Utilisation dans `data.js` :**
-
-{% raw %}
-```javascript
-systemPrompt: `
-  Tu accompagnes {{USER_NAME}} dans l'observation de cette œuvre...
-`
-```
-{% endraw %}
-
-#### Exemple 2 : Injecter la date actuelle
-
-{% raw %}
-```javascript
-function buildSystemPromptForScene(scene){
-  let p = (scene.systemPrompt || "").trim();
+  p = replaceTemplates(p);
 
   if (p.includes("{{SCENES_LIST}}")) {
     const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
@@ -581,12 +549,13 @@ function buildSystemPromptForScene(scene){
 ```
 {% endraw %}
 
-#### Exemple 3 : Contexte selon le numéro de scène
+#### Exemple 2 : Contexte selon le numéro de scène
 
 {% raw %}
 ```javascript
 function buildSystemPromptForScene(scene){
   let p = (scene.systemPrompt || "").trim();
+  p = replaceTemplates(p);
 
   if (p.includes("{{SCENES_LIST}}")) {
     const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
