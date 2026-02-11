@@ -518,10 +518,21 @@ function buildSystemPromptForScene(scene){
 ```
 {% endraw %}
 
-### Variable de promptVars
+**Comment ça fonctionne :**
 
-La ligne `p = replaceTemplates(p);` va commencer par vérifier si {% raw %}{{nomvar}}{% endraw %} contiennent un nom de variable en mémoire dans promptVars.
-Si c'est le cas elle va remplacer dans p {% raw %}{{nomvar}}{% endraw %} par sa valeur en mémoire.
+1. **Ligne 2** : Récupère le `systemPrompt` de la scène
+2. **Ligne 3** : `replaceTemplates(p)` remplace automatiquement **toutes les variables** de `promptVars.js`
+   - Par exemple : `{% raw %}{{userName}}{% endraw %}` devient `"Alice"` et `{% raw %}{{age}}{% endraw %}` devient `15`
+3. **Lignes 5-9** : Si le prompt contient `{% raw %}{{SCENES_LIST}}{% endraw %}`, il est remplacé par la liste de toutes les scènes
+4. **Ligne 11** : Retourne le prompt transformé
+
+**Différence entre `promptVars` et `{{SCENES_LIST}}` :**
+
+| Type | Défini dans | Exemple | Usage |
+|------|-------------|---------|-------|
+| **Variables promptVars** | `promptVars.js` | `{% raw %}{{userName}}{% endraw %}`, `{% raw %}{{age}}{% endraw %}` | Informations utilisateur réutilisables partout |
+| **Variables spéciales** | `prompt.js` | `{% raw %}{{SCENES_LIST}}{% endraw %}` | Informations calculées dynamiquement |
+
 
 ### Ajouter vos propres transformations
 
@@ -549,6 +560,21 @@ function buildSystemPromptForScene(scene){
 ```
 {% endraw %}
 
+**Utilisation dans `data.js` :**
+```javascript
+systemPrompt: `
+  Aujourd'hui nous sommes le {{TODAY}}.
+  Tu accompagnes {{userName}} ({{age}} ans) dans l'observation de cette œuvre...
+`
+```
+
+**Résultat final envoyé à l'IA :**
+```
+Aujourd'hui nous sommes le 11/02/2026.
+Tu accompagnes Alice (15 ans) dans l'observation de cette œuvre...
+```
+
+
 #### Exemple 2 : Contexte selon le numéro de scène
 
 {% raw %}
@@ -574,6 +600,10 @@ function buildSystemPromptForScene(scene){
 }
 ```
 {% endraw %}
+
+**Note importante :** Les variables de `promptVars.js` (`{{userName}}`, `{{age}}`, etc.) sont **automatiquement** remplacées par `replaceTemplates(p)` à la ligne 3. Vous n'avez **pas besoin** de les gérer manuellement dans cette fonction.
+
+> 📖 **Pour en savoir plus** : Consultez la section [Fichier 4 : `promptVars.js`](#fichier-4--promptvarsjs--gérer-les-variables-globales-pour-les-prompts) pour apprendre à définir vos propres variables.
 
 ---
 
