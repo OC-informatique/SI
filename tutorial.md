@@ -504,8 +504,10 @@ mais cela ne diminue en rien son génie artistique.`;
 ```javascript
 function buildSystemPromptForScene(scene){
   let p = (scene.systemPrompt || "").trim();
+  p = replaceTemplates(p);
 
-  // Option pratique : injection de la liste des scènes
+  // Option pratique : si tu veux injecter une liste des scènes dans le prompt
+  // en écrivant {{SCENES_LIST}} dans systemPrompt
   if (p.includes("{{SCENES_LIST}}")) {
     const list = scenes.map(s => `- ${s.id} — ${s.title}`).join("\n");
     p = p.replaceAll("{{SCENES_LIST}}", list);
@@ -515,6 +517,11 @@ function buildSystemPromptForScene(scene){
 }
 ```
 {% endraw %}
+
+### Variable de promptVars
+
+La ligne `p = replaceTemplates(p);` va commencer par vérifier si {% raw %}{{nomvar}}{% endraw %} contiennent un nom de variable en mémoire dans promptVars.
+Si c'est le cas elle va remplacer dans p {% raw %}{{nomvar}}{% endraw %} par sa valeur en mémoire.
 
 ### Ajouter vos propres transformations
 
