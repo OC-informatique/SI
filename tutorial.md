@@ -601,7 +601,7 @@ function buildSystemPromptForScene(scene){
 ```
 {% endraw %}
 
-**Note importante :** Les variables de `promptVars.js` (`{{userName}}`, `{{age}}`, etc.) sont **automatiquement** remplacées par `replaceTemplates(p)` à la ligne 3. Vous n'avez **pas besoin** de les gérer manuellement dans cette fonction.
+**Note importante :** Les variables de `promptVars.js` (`{% raw %}{{userName}}{% endraw %}`, `{% raw %}{{age}}{% endraw %}`, etc.) sont **automatiquement** remplacées par `replaceTemplates(p)` à la ligne 3. Vous n'avez **pas besoin** de les gérer manuellement dans cette fonction.
 
 > 📖 **Pour en savoir plus** : Consultez la section [Fichier 4 : `promptVars.js`](#fichier-4--promptvarsjs--gérer-les-variables-globales-pour-les-prompts) pour apprendre à définir vos propres variables.
 
